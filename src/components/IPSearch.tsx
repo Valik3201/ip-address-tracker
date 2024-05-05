@@ -25,6 +25,7 @@ const IPSearch: React.FC<IPSearchProps> = ({ onSearch }) => {
           placeholder="Search for any IP address or domain"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          required
         />
         <button
           type="submit"
