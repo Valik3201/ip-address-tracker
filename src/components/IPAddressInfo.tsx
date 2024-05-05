@@ -1,52 +1,69 @@
+import { LocationData } from "../services";
+import Skeleton from "./Skeleton";
+
 interface IPAddressInfoProps {
-  ipAddress: string | null;
-  location: string;
-  postalCode: string;
-  timezone: string;
-  isp: string;
+  data: LocationData | null;
+  loading: boolean;
 }
 
-const IPAddressInfo: React.FC<IPAddressInfoProps> = ({
-  ipAddress,
-  location,
-  postalCode,
-  timezone,
-  isp,
-}) => {
+const IPAddressInfo: React.FC<IPAddressInfoProps> = ({ data, loading }) => {
   return (
     <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 bg-white min-w-80 md:min-w-[700px] lg:w-[1100px] rounded-2xl py-8 px-8 gap-4 lg:divide-x divide-black/15 text-center lg:text-left">
-      <li>
-        <p className="text-info-heading-mobile md:text-info-heading text-custom-gray/50 uppercase font-bold pb-3">
-          IP address
-        </p>
-        <p className="text-info-mobile md:text-info font-medium">{ipAddress}</p>
-      </li>
-      <li className="lg:pl-8">
-        <p className="text-info-heading-mobile md:text-info-heading text-custom-gray/50 uppercase font-bold pb-3">
-          Location
-        </p>
-        <p className="text-info-mobile md:text-info font-medium">{location}</p>
-        {postalCode && (
-          <p className="text-info-mobile md:text-info font-medium">
-            {postalCode}
-          </p>
-        )}
-      </li>
-      <li className="lg:pl-8">
-        <p className="text-info-heading-mobile md:text-info-heading text-custom-gray/50 uppercase font-bold pb-3">
-          Timezone
-        </p>
-        <p className="text-info-mobile md:text-info font-medium">
-          UTC {timezone}
-        </p>
-      </li>
-      <li className="lg:pl-8">
-        <p className="text-info-heading-mobile md:text-info-heading text-custom-gray/50 uppercase font-bold pb-3">
-          ISP
-        </p>
-        <p className="text-info-mobile md:text-info font-medium">{isp}</p>
-      </li>
+      {data && (
+        <>
+          <IPAddressInfoItem
+            label="IP address"
+            value={data.ipAddress}
+            loading={loading}
+          />
+          <IPAddressInfoItem
+            label="Location"
+            value={data.location}
+            loading={loading}
+          />
+          <IPAddressInfoItem
+            label="Timezone"
+            value={`UTC ${data.timezone}`}
+            loading={loading}
+          />
+          <IPAddressInfoItem label="ISP" value={data.isp} loading={loading} />
+        </>
+      )}
     </ul>
+  );
+};
+
+interface IPAddressInfoItemProps {
+  label: string;
+  value: string | null;
+  additionalValue?: string;
+  loading: boolean;
+}
+
+const IPAddressInfoItem: React.FC<IPAddressInfoItemProps> = ({
+  label,
+  value,
+  additionalValue,
+  loading,
+}) => {
+  return (
+    <li className="lg:first:pl-0 lg:pl-8">
+      <p className="text-info-heading-mobile md:text-info-heading text-custom-gray/50 uppercase font-bold pb-3">
+        {label}
+      </p>
+      {loading ? (
+        <Skeleton />
+      ) : (
+        <>
+          <p className="text-info-mobile md:text-info font-medium">{value}</p>
+          {additionalValue && (
+            <p className="text-info-mobile md:text-info font-medium">
+              {additionalValue}
+            </p>
+          )}
+        </>
+      )}
+    </li>
   );
 };
 
