@@ -9,11 +9,18 @@ export const fetchLocation = async (ip: string): Promise<LocationData> => {
       `https://geo.ipify.org/api/v2/country,city?apiKey=${API_KEY}&ipAddress=${ip}`
     );
 
-    const { lat, lng, city, region, country, postalCode, timezone } =
+    const { lat, lng, city, region, country, postalCode } =
       response.data.location;
     const position: [number, number] = [lat, lng];
-    const location = `${city}, ${region}, ${country}`;
-    const isp = response.data.isp;
+    let location = `${city}, ${region}, ${country}`;
+    let timezone = response.data.location.timezone;
+    let isp = response.data.isp;
+
+    if (country === "ZZ" || isp === "" || timezone === "") {
+      location = "N/A";
+      timezone = "N/A";
+      isp = "N/A";
+    }
 
     return { ipAddress: ip, position, location, postalCode, timezone, isp };
   } catch (error) {
