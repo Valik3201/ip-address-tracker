@@ -1,40 +1,47 @@
 import React, { useState, useEffect } from "react";
+import Error from "./components/Error";
 import Header from "./components/Header";
 import IPAddressInfo from "./components/IPAddressInfo";
 import IPSearch from "./components/IPSearch";
 import MapComponent from "./components/MapComponent";
+import MapSkeleton from "./components/MapSkeleton";
 import { LocationData, fetchLocation, fetchIpAddress } from "./services";
 import "leaflet/dist/leaflet.css";
 
 const App: React.FC = () => {
-  const [locationData, setLocationData] = useState<LocationData>({
-    ipAddress: null,
-    position: [0, 0],
-    location: "",
-    postalCode: "",
-    timezone: "",
-    isp: "",
-  });
+  const [locationData, setLocationData] = useState<LocationData | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const ip = await fetchIpAddress();
-        const locationData = await fetchLocation(ip);
-        setLocationData(locationData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
     fetchData();
   }, []);
 
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const ip = await fetchIpAddress();
+      const locationData = await fetchLocation(ip);
+      setLocationData(locationData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError("An error occurred while fetching data. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSearch = async (query: string) => {
+    setLoading(true);
+    setError("");
     try {
       const locationData = await fetchLocation(query);
       setLocationData(locationData);
     } catch (error) {
       console.error("Error fetching data:", error);
+      setError("An error occurred while fetching data. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -45,11 +52,20 @@ const App: React.FC = () => {
       <div className="absolute z-10 top-10 left-1/2 transform -translate-x-1/2">
         <Header />
         <IPSearch onSearch={handleSearch} />
-        <IPAddressInfo {...locationData} />
+        <IPAddressInfo data={locationData} loading={loading} />
       </div>
-      {locationData.location && (
-        <MapComponent position={locationData.position} />
+
+      {loading ? (
+        <MapSkeleton />
+      ) : (
+        <>
+          {!loading && locationData && (
+            <MapComponent position={locationData.position} />
+          )}
+        </>
       )}
+
+      {error && <Error message={error} />}
     </div>
   );
 };
