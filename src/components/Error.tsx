@@ -34,7 +34,7 @@ const Error: React.FC<ErrorProps> = ({ message }) => {
             </div>
             <button
               type="button"
-              className="ms-auto bg-red-50 text-red-600 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 transition duration-200 ease-in-out"
+              className="ms-auto bg-red-50 text-red-600 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 flex-shrink-0 transition duration-200 ease-in-out"
               onClick={handleClose}
               aria-label="Close"
             >

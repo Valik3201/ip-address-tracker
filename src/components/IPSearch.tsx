@@ -21,7 +21,7 @@ const IPSearch: React.FC<IPSearchProps> = ({ onSearch }) => {
       <div className="relative w-full">
         <input
           type="search"
-          className="block rounded-2xl px-6 py-4 w-full z-20 text-search-form text-custom-gray"
+          className="block rounded-2xl px-4 lg:px-6 py-4 w-full z-20 text-sm lg:text-search-form text-custom-gray"
           placeholder="Search for any IP address or domain"
           value={query}
           onChange={(e) => setQuery(e.target.value)}

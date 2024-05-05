@@ -49,7 +49,7 @@ const App: React.FC = () => {
     <div className="font-rubik max-h-svh">
       <div className="w-full h-[300px] md:h-[280px] bg-mobile bg-cover bg-center bg-blue md:bg-desktop"></div>
 
-      <div className="absolute z-10 top-10 left-1/2 transform -translate-x-1/2">
+      <div className="absolute z-10 top-5 lg:top-10 left-1/2 transform -translate-x-1/2">
         <Header />
         <IPSearch onSearch={handleSearch} />
         <IPAddressInfo data={locationData} loading={loading} />
