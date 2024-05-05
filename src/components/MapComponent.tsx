@@ -14,8 +14,9 @@ interface MapComponentProps {
 const MapComponent: React.FC<MapComponentProps> = ({ position }) => {
   return (
     <MapContainer
+      key={position[0] + position[1]}
       center={position}
-      zoom={15}
+      zoom={14}
       scrollWheelZoom={false}
       className="w-full h-[calc(100vh_-_300px)] md:h-[calc(100vh_-_280px)] z-0"
     >
