@@ -7,4 +7,8 @@ export default defineConfig({
     port: 3000,
   },
   plugins: [react()],
+
+  define: {
+    "process.env.VITE_IP_API_KEY": JSON.stringify(process.env.VITE_IP_API_KEY),
+  },
 });
