@@ -23,6 +23,7 @@ const IPSearch: React.FC<IPSearchProps> = ({ onSearch }) => {
           type="search"
           className="block rounded-2xl px-4 lg:px-6 py-4 w-full z-20 text-sm lg:text-search-form text-custom-gray focus:outline-none focus:ring-2 focus:ring-black"
           placeholder="Search for any IP address or domain"
+          aria-label="Input search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           required

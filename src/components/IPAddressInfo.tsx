@@ -8,28 +8,30 @@ interface IPAddressInfoProps {
 
 const IPAddressInfo: React.FC<IPAddressInfoProps> = ({ data, loading }) => {
   return (
-    <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 bg-white min-w-80 md:min-w-[700px] lg:w-[1100px] rounded-2xl py-4 lg:py-8 px-4 lg:px-8 gap-4 lg:divide-x divide-black/15 text-center lg:text-left">
-      {data && (
-        <>
-          <IPAddressInfoItem
-            label="IP address"
-            value={data.ipAddress}
-            loading={loading}
-          />
-          <IPAddressInfoItem
-            label="Location"
-            value={data.location}
-            loading={loading}
-          />
-          <IPAddressInfoItem
-            label="Timezone"
-            value={`UTC ${data.timezone}`}
-            loading={loading}
-          />
-          <IPAddressInfoItem label="ISP" value={data.isp} loading={loading} />
-        </>
-      )}
-    </ul>
+    <main>
+      <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 bg-white min-w-80 md:min-w-[700px] lg:w-[1100px] rounded-2xl py-4 lg:py-8 px-4 lg:px-8 gap-4 lg:divide-x divide-black/15 text-center lg:text-left">
+        {data && (
+          <>
+            <IPAddressInfoItem
+              label="IP address"
+              value={data.ipAddress}
+              loading={loading}
+            />
+            <IPAddressInfoItem
+              label="Location"
+              value={data.location}
+              loading={loading}
+            />
+            <IPAddressInfoItem
+              label="Timezone"
+              value={`UTC ${data.timezone}`}
+              loading={loading}
+            />
+            <IPAddressInfoItem label="ISP" value={data.isp} loading={loading} />
+          </>
+        )}
+      </ul>
+    </main>
   );
 };
 
